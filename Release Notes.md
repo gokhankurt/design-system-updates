@@ -1,5 +1,3 @@
-# Design System Updates
-
 ## Foundation
 ### 02/05/2024
 - Semantic colours page has been synced with the design system and updated on Zeroheight
