@@ -1,7 +1,7 @@
 ## 19/06/2024
 
 ### Templates
-- 
+
 **Design Update: Form Templates (First Release)**
 We are excited to announce the beginning of a comprehensive design update aimed at providing more guidance through common cases and templates. The first release in this progress is focused on form templates.
 
