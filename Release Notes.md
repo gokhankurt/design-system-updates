@@ -2,8 +2,7 @@
 
 ### Templates
 - 
-**Design Update: Form Templates (First Release)
-**
+**Design Update: Form Templates (First Release)**
 We are excited to announce the beginning of a comprehensive design update aimed at providing more guidance through common cases and templates. The first release in this progress is focused on form templates.
 
 **Key Features:**
@@ -15,8 +14,7 @@ We are excited to announce the beginning of a comprehensive design update aimed 
 	•	The full release will be available soon.
 	•	Documentation on Zeroheight is still in progress.
 
-**Access:
-**
+**Access:**
 	•	Designers can access the templates and components via the Figma library.
 	•	The Figma library will be released shortly and will be enabled for internal usage.
 
