@@ -19,7 +19,7 @@ The Figma library will be released shortly and will be enabled for internal usag
 
 Stay tuned for more updates as we continue to improve our design resources! 
 
-For more information and feedback you may use our Slack channel [#digital-design-system]([url](https://vi-iot.slack.com/archives/C03M3CH8YRL)) or via [email](mailto:designsystem@viessmann.com).
+For more information and feedback you may use our Slack channel [#digital-design-system]([[url](https://vi-iot.slack.com/archives/C03M3CH8YRL)]) or via [email](mailto:designsystem@viessmann.com).
 
 ## 02/05/2024
 
