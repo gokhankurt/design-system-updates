@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design Token Reducer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="page-header">
+    <h1>Design Token Reducer</h1>
+    <p>Upload your raw design token JSON, pick platforms and size scales, and export a reduced set.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>1) Upload token JSON</h2>
+      <div class="file-actions">
+        <label class="file-input">
+          <input id="tokenFile" type="file" accept="application/json" />
+          <span>Choose JSON file</span>
+        </label>
+        <button id="sampleBtn" class="secondary" type="button">Load sample from GitHub</button>
+      </div>
+      <p id="fileStatus" class="muted">No file loaded.</p>
+    </section>
+
+    <section class="panel">
+      <h2>2) Filter tokens</h2>
+      <div class="filters">
+        <div>
+          <h3>Platforms</h3>
+          <div id="platformFilters" class="chip-group"></div>
+        </div>
+        <div>
+          <h3>Size scales</h3>
+          <div id="sizeFilters" class="chip-group"></div>
+        </div>
+        <div>
+          <h3>Token groups</h3>
+          <div id="groupFilters" class="chip-group"></div>
+        </div>
+      </div>
+      <div class="search-row">
+        <label>
+          Search by name or path
+          <input id="searchInput" type="search" placeholder="color.primary or spacing.l" />
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>3) Preview output</h2>
+      <div class="stats">
+        <div>
+          <span class="stat-label">Total tokens</span>
+          <span id="totalCount" class="stat-value">0</span>
+        </div>
+        <div>
+          <span class="stat-label">Filtered tokens</span>
+          <span id="filteredCount" class="stat-value">0</span>
+        </div>
+      </div>
+      <div class="preview-list">
+        <h3>Token preview (first 20)</h3>
+        <ul id="previewList" class="preview-items"></ul>
+      </div>
+      <pre id="output" class="output"></pre>
+      <div class="actions">
+        <button id="copyBtn" type="button">Copy JSON</button>
+        <button id="downloadBtn" type="button">Download JSON</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <p>Tip: include only XS for mobile apps, or keep S/M/L for responsive web by selecting sizes above.</p>
+  </footer>
+
+  <script src="src/app.js"></script>
+</body>
+</html>
