@@ -40,19 +40,21 @@
     night: "☁️", peak: "☀️", partly: "⛅", overcast: "☁️", evening: "🌙",
   };
 
-  function generateData() {
+  function generateData(seed) {
+    const rng = seed ?? Math.random() * 100;
     return hours.map(h => {
       const t = (h - 6) / 16;
+      const jitter = 1 + .12 * Math.sin(rng + h * .7) * Math.cos(rng * .3 + h);
       const pvRaw  = 8.2 * Math.exp(-Math.pow((h - 12.5) / 3.2, 2));
-      const pv     = Math.max(0, pvRaw * (.85 + .15 * Math.sin(h * 1.1)));
+      const pv     = Math.max(0, pvRaw * (.85 + .15 * Math.sin(h * 1.1)) * jitter);
 
       let evPv = 0;
       if (h >= 10 && h <= 18) {
-        evPv = 5.5 * Math.exp(-Math.pow((h - 13) / 2.8, 2));
+        evPv = 5.5 * Math.exp(-Math.pow((h - 13) / 2.8, 2)) * jitter;
         if (h >= 16) evPv *= .25;
       }
 
-      const hh = 1.8 + .5 * Math.sin(t * Math.PI * 2.4) + .3 * Math.cos(t * Math.PI);
+      const hh = (1.8 + .5 * Math.sin(t * Math.PI * 2.4) + .3 * Math.cos(t * Math.PI)) * (1 + .08 * Math.sin(rng + h));
 
       return {
         hour: h,
@@ -64,7 +66,7 @@
     });
   }
 
-  const data = generateData();
+  let data = generateData(42);
 
   const SERIES = [
     { key: "pvProduction", label: "PV production",          shortLabel: "PV production",  color: "#c8a44e", fill: "rgba(200,164,78,.32)",  patId: "pat-diag",  patternLabel: "Diagonal /",  depth: 0 },
@@ -432,6 +434,7 @@
   }
 
   /* ── Hover on areas themselves ──────────────────────────── */
+  const hitAreas = {};
   SERIES.slice().reverse().forEach(s => {
     const ox = (SERIES.length - 1 - s.depth) * DX;
     const oy = (SERIES.length - 1 - s.depth) * DY;
@@ -444,6 +447,48 @@
 
     hitArea.on("mouseenter", () => setHighlight(s.key));
     hitArea.on("mouseleave", () => setHighlight(null));
+    hitAreas[s.key] = hitArea;
+  });
+
+  /* ── Dynamic data refresh with morphing transitions ───── */
+  function refreshData() {
+    data = generateData();
+    const dur = 900;
+    const ease = d3.easeCubicInOut;
+
+    SERIES.forEach(s => {
+      const sg = seriesGroups[s.key];
+      const paths = sg.selectAll("path").nodes();
+
+      d3.select(paths[0]).datum(data)
+        .transition().duration(dur).ease(ease)
+        .attr("d", makeArea(s.key));
+
+      d3.select(paths[1]).datum(data)
+        .transition().duration(dur).ease(ease)
+        .attr("d", makeArea(s.key));
+
+      d3.select(paths[2]).datum(data)
+        .transition().duration(dur).ease(ease)
+        .attr("d", makeLine(s.key))
+        .attr("stroke-dasharray", "none")
+        .attr("stroke-dashoffset", 0);
+
+      if (hitAreas[s.key]) {
+        hitAreas[s.key].datum(data)
+          .transition().duration(dur).ease(ease)
+          .attr("d", makeArea(s.key));
+      }
+    });
+  }
+
+  /* Auto-refresh every 6 seconds for a living data feel */
+  let autoRefreshId = setInterval(refreshData, 6000);
+
+  /* Pause auto-refresh on hover for uninterrupted exploration */
+  overlay.on("mouseenter", () => clearInterval(autoRefreshId));
+  overlay.on("mouseleave.autorefresh", () => {
+    autoRefreshId = setInterval(refreshData, 6000);
   });
 
 })();
