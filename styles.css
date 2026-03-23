@@ -1,0 +1,277 @@
+/* ── Reset & Base ───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f4f6f9;
+  --card-bg: #ffffff;
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, .06);
+  --text: #1e2a38;
+  --text-muted: #6b7a8d;
+  --border: #e4e8ee;
+
+  --pv-color: #c8a44e;
+  --pv-fill: rgba(200, 164, 78, .35);
+  --ev-pv-color: #3aaa5b;
+  --ev-pv-fill: rgba(58, 170, 91, .32);
+  --ev-grid-color: #8c9aab;
+  --ev-grid-fill: rgba(140, 154, 171, .25);
+  --household-color: #1d6b3a;
+  --household-fill: rgba(29, 107, 58, .30);
+
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ease-out-expo: cubic-bezier(.16, 1, .3, 1);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Typography ─────────────────────────────────────────── */
+.description {
+  max-width: 960px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.caption {
+  max-width: 960px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 16px;
+  text-align: left;
+  width: 100%;
+}
+
+/* ── Card ───────────────────────────────────────────────── */
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  padding: 32px 36px 28px;
+  max-width: 1040px;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: card-enter .7s var(--ease-out-expo) forwards;
+}
+
+@keyframes card-enter {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  letter-spacing: -.02em;
+}
+
+/* ── Layout ─────────────────────────────────────────────── */
+.chart-layout {
+  display: flex;
+  gap: 36px;
+}
+
+.chart-container {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.chart-container svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── Legend Panel ────────────────────────────────────────── */
+.legend-panel {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background .25s ease, opacity .35s ease;
+}
+
+.legend-item:hover { background: rgba(0,0,0,.03); }
+
+.legend-item.dimmed { opacity: .25; }
+
+.legend-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.legend-swatch svg {
+  width: 100%;
+  height: 100%;
+}
+
+.legend-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.legend-label-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.legend-label-pattern {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.legend-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 6px 0;
+}
+
+.legend-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.tz-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.tz-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.tz-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Tooltip ────────────────────────────────────────────── */
+.chart-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 6px 28px rgba(0,0,0,.12);
+  padding: 14px 18px;
+  font-size: 12px;
+  line-height: 1.5;
+  min-width: 210px;
+  opacity: 0;
+  transform: translateY(6px) scale(.97);
+  transition: opacity .2s ease, transform .2s var(--ease-out-expo);
+  z-index: 10;
+}
+
+.chart-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.tooltip-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.tooltip-time {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tooltip-badge {
+  background: #1e2a38;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.tooltip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tooltip-series-name {
+  flex: 1;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.tooltip-line {
+  width: 18px;
+  height: 2px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.tooltip-value {
+  font-weight: 700;
+  font-size: 13px;
+  min-width: 48px;
+  text-align: right;
+}
+
+/* ── Legend item transition ──────────────────────────────── */
+.legend-item {
+  transition: background .25s ease, opacity .4s cubic-bezier(.16,1,.3,1);
+}
+.legend-item.dimmed { opacity: .2; }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .chart-layout { flex-direction: column; }
+  .legend-panel { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .card { padding: 20px 18px; }
+}

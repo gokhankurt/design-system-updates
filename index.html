@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Green Charging – Dynamic Energy Chart</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <p class="description">
+    A re-imagination of the Green Charging Figma design using oblique 3D projection.
+    Each energy series occupies its own depth plane &ndash; PV production in back, household
+    consumption in front &ndash; rendered with the painter&rsquo;s algorithm. Hover a curve or
+    legend entry to highlight it; move the cursor across the chart to see per-series values
+    at each hour.
+  </p>
+
+  <div class="card" id="chart-card">
+    <h2 class="card-title">Green charging</h2>
+    <div class="chart-layout">
+      <div class="chart-container" id="chart"></div>
+      <div class="legend-panel" id="legend"></div>
+    </div>
+  </div>
+
+  <p class="caption">
+    Graph 2 &ndash; With deactivated usage of battery to charge the electric vehicle (Oblique 3D)
+  </p>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="chart.js"></script>
+</body>
+</html>
